@@ -1,27 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './button.css';
+import './success.css';
+// import {Input} from "../Input/Input"
+// import {Button} from "../Button"
 
 /**
  * Primary UI component for user interaction
  */
-export const Button = ({ primary, backgroundColor, size, label, ...props }) => {
-  const mode = primary ? 'storybook-button--primary' : 'storybook-button--secondary';
+export const Success = ({ primary, backgroundColor, size, label, ...props }) => {
+  const mode = primary ? 'storybook-form--primary' : 'storybook-form--secondary';
   return (
-    <button
-      type="button"
-      className="shadow bg-yellow-500 hover:bg-gray-500 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
-      // , ['storybook-button', `storybook-button--${size}`, mode].join(' ')
-      style={backgroundColor && { backgroundColor }}
-      {...props}
-      onClick={()=>{console.log('CLICK')}}
-    >
-      {label}
-    </button>
+    
+    <section>
+      <h4 className="font-bold text-3xl text-yellow-500">Thank you For Signing Up with Atlas!</h4> 
+      <p className="mb-4"> We're your new rental agent. You pay us and we pay your landlord, and you get sweet perks each month + when it's time to renew your lease and move! </p>
+    </section>
   );
 };
 
-Button.propTypes = {
+Success.propTypes = {
   /**
    * Is this the principal call to action on the page?
    */
@@ -44,7 +41,7 @@ Button.propTypes = {
   onClick: PropTypes.func,
 };
 
-Button.defaultProps = {
+Success.defaultProps = {
   backgroundColor: null,
   primary: false,
   size: 'medium',

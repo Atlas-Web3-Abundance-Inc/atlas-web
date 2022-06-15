@@ -5,14 +5,21 @@ import './input.css';
 /**
  * Primary UI component for user interaction
  */
-export const Input = ({ primary, backgroundColor, size, label, ...props }) => {
-  const mode = primary ? 'storybook-button--primary' : 'storybook-button--secondary';
+export const Input = ({ primary, backgroundColor, size, label, type, ...props }) => {
+  const mode = primary ? 'storybook-input--primary' : 'storybook-input--secondary';
+  
   return (
-    <input
-      className={['storybook-button', `storybook-button--${size}`, mode].join(' ')}
-      style={backgroundColor && { backgroundColor }}
-      {...props}
-    />
+    <div style={{display:"flex", flexDirection:"column", width:"50%", alignItems:"space-between", padding:"0 2% 0 0"}}>
+      <input
+        className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-slate-500"
+        {...props}
+        type={type}
+        placeholder={props.placeholder}
+      />
+      <label className="block text-gray-700 text-sm font-bold mb-2"> 
+        {label}
+      </label>  
+    </div>
   );
 };
 
@@ -26,11 +33,11 @@ Input.propTypes = {
    */
   backgroundColor: PropTypes.string,
   /**
-   * How large should the button be?
+   * How large should the input be?
    */
   size: PropTypes.oneOf(['small', 'medium', 'large']),
   /**
-   * Button contents
+   * input contents
    */
   label: PropTypes.string.isRequired,
   /**
