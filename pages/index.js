@@ -78,11 +78,11 @@ export default function Home() {
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          Welcome to <span className='text-yellow-500'>Atlas</span>
+          Welcome to <span className="text-yellow-500">Atlas</span>
           {/* <a href="https://nextjs.org">At</a> */}
         </h1>
 
-        <p className='font-semibold text-gray-300 px-50'> We're your new rental agent. You pay us and we pay your landlord, and you get sweet perks each month + when it's time to renew your lease and move! </p>
+        <p className="font-semibold text-gray-300 px-50"> We&apos;re your new rental agent. You pay us and we pay your landlord, and you get sweet perks each month + when it&apos;s time to renew your lease and move! </p>
         <p className={styles.description}>
           Get started by filling out this  {' '}
           <code className={styles.code}>form</code>
