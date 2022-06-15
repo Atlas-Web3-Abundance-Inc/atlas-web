@@ -21,12 +21,29 @@ export default function Home() {
 
   })
 
-  const updateFormData = event=> {
+  const { firstName,
+  lastName,
+  phone, 
+  company,
+  address,
+  email,
+  twitterLink,
+  linkedinLink,
+  facebookLink,
+  landlordAddress,
+  landlordEmail,
+  landlordPhone} = formData
+
+  const updateFormData = event => {
     event.preventDefault()
+    console.log(event.target.name)
+    console.log( event.target.value)
+
     setFormData({
     ...formData, 
     [event.target.name] : event.target.value
-  }) }
+  }) 
+}
 
   // const {firstName, lastName, }
 
@@ -59,10 +76,17 @@ export default function Home() {
           type={type}
           placeholder={props.placeholder}
           onChange={
-           e=> updateFormData(e)}
+           e=> {
+           console.log(e),
+           updateFormData(e)
+          }
+          }
+          value={props.value}
+          name={props.name}
+          autoFocus
 
         />
-        <label className="block text-gray-700 text-sm font-bold mb-2"> 
+        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor={props.name}> 
           {label}
         </label>  
       </div>
@@ -82,7 +106,7 @@ export default function Home() {
           {/* <a href="https://nextjs.org">At</a> */}
         </h1>
 
-        <p className="font-semibold text-gray-300 px-50"> We&apos;re your new rental agent. You pay us and we pay your landlord, and you get sweet perks each month + when it&apos;s time to renew your lease and move! </p>
+        <p className="font-bold text-gray-200 py-60 px-60" style={{padding:"60px 60px 0"}}> We&apos;re your new rental agent. You pay us and we pay your landlord, and you get sweet perks each month + when it&apos;s time to renew your lease and move! </p>
         <p className={styles.description}>
           Get started by filling out this  {' '}
           <code className={styles.code}>form</code>
@@ -98,20 +122,26 @@ export default function Home() {
       <div style={{display:"flex",margin:"0 0 40px", }}>
         <Input
           label={"First Name"}
-          
+          name="firstName"
+          value={firstName}
         />
         <Input
           label={"Last Name"}
+          name="lastName"
+          value={lastName}
         />
       </div>
       <div style={{display:"flex",margin:"0 0 40px", }}>
         <Input
           label={"Phone number"}
           type="tel"
+          name="phone"
+          value={phone}
         />
         <Input
           label={"Company"}
-          
+          name="company"
+          value={company}
         />
       </div>
       <div>
@@ -120,10 +150,16 @@ export default function Home() {
       <div style={{margin:"0 0 40px", display:"flex"}}>
       <Input
           label={"Home address"}
+          type="text"
+          name="address"
+          value={address}
+
       />
         <Input
           label={"Email"}
           type="email"
+          name="email"
+          value={email}
         />
         </div>
       <div style={{margin:"0 0 20px",display:"flex"}}>
@@ -131,16 +167,24 @@ export default function Home() {
           placeholder={"https://twitter.com/_queenscript"}
           label={"Twitter Link"}
           type="text"
+          name="twitterLink"
+          value={twitterLink}
+
         />
         <Input
             placeholder={"https://linkedin.com/in/queenshabazz"}
             label={"LinkedIn"}
             type="text"
+            name="linkedinLink"
+            value={linkedinLink}
         />
         <Input
             placeholder={"https://www.facebook.com/QueenShabazz/"}
             label={"Facebook"}
             type="text"
+            name="facebookLink"
+            value={facebookLink}
+
         />
       </div>
       <div style={{margin:"0 0 20px",display:"flex"}}>
@@ -148,16 +192,22 @@ export default function Home() {
           placeholder={"111 San Jose"}
           label={"Landlord Address"}
           type="text"
+          name="landlordAddress"
+          value={landlordAddress}
         />
         <Input
             placeholder={"landlord@email.coma"}
             label={"Landlord Email"}
-            type="text"
+            type="email"
+            name="landlordEmail"
+            value={landlordEmail}
         />
         <Input
             placeholder={"(555)555-5555"}
             label={"Landlord Phone"}
-            type="text"
+            type="tel"
+            name="landlordPhone"
+            value={landlordPhone}
         />
       </div>    
       <Button
