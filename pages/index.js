@@ -1,53 +1,59 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 // import { Form } from '../stories/Form/Form'
 export default function Home() {
   // ** FORM CONTROLS */
   const [formData, setFormData] = useState({
-    firstName:"",
-    lastName:"",
-    phone:"", 
-    company:"",
-    address:"",
-    email:"",
-    twitterLink:"",
-    linkedinLink:"",
-    facebookLink:"",
-    landlordAddress:"",
-    landlordEmail:"",
-    landlordPhone:""
+    firstName: "",
+    lastName: "",
+    phone: "",
+    company: "",
+    address: "",
+    email: "",
+    twitterLink: "",
+    linkedinLink: "",
+    facebookLink: "",
+    landlordAddress: "",
+    landlordEmail: "",
+    landlordPhone: ""
 
   })
 
-  const { firstName,
-  lastName,
-  phone, 
-  company,
-  address,
-  email,
-  twitterLink,
-  linkedinLink,
-  facebookLink,
-  landlordAddress,
-  landlordEmail,
-  landlordPhone} = formData
 
+
+  let {
+    firstName,
+    lastName,
+    phone,
+    company,
+    address,
+    email,
+    twitterLink,
+    linkedinLink,
+    facebookLink,
+    landlordAddress,
+    landlordEmail,
+    landlordPhone } = formData
+
+  let changed
+
+  React.useEffect(() => {
+    changed = formData
+  }, [formData])
   const updateFormData = event => {
-    event.preventDefault()
-    console.log(event.target.name)
-    console.log( event.target.value)
+    // event.preventDefault()
 
     setFormData({
-    ...formData, 
-    [event.target.name] : event.target.value
-  }) 
-}
+      ...formData,
+      [event.target.name]: event.target.value
+    })
+  }
 
   // const {firstName, lastName, }
 
-   // ** COMPONENTS */
+  // ** COMPONENTS */
   const Button = ({ primary, backgroundColor, size, label, ...props }) => {
     const mode = primary ? 'storybook-button--primary' : 'storybook-button--secondary';
     return (
@@ -57,41 +63,44 @@ export default function Home() {
         // , ['storybook-button', `storybook-button--${size}`, mode].join(' ')
         style={backgroundColor && { backgroundColor }}
         {...props}
-        // onClick={()=>{console.log('CLICK')}}
+      // onClick={()=>{console.log('CLICK')}}
       >
         {label}
       </button>
     );
   };
-  
-  
+
+
   const Input = ({ primary, backgroundColor, size, label, type, ...props }) => {
     const mode = primary ? 'storybook-input--primary' : 'storybook-input--secondary';
-    
+
     return (
-      <div style={{display:"flex", flexDirection:"column", width:"50%", alignItems:"space-between", padding:"0 2% 0 0"}}>
+      <div style={{ display: "flex", flexDirection: "column", width: "50%", alignItems: "space-between", padding: "0 2% 0 0" }}>
         <input
           className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-slate-500"
-          {...props}
           type={type}
           placeholder={props.placeholder}
           onChange={
-           e=> {
-           console.log(e),
-           updateFormData(e)
+            e => {
+              e.preventDefault()
+              props.updateFormData(e);
+            }
+            // e=> {
+            // props.updateFormData(e);
+            // }
           }
-          }
-          value={props.value}
+          value={formData[props?.name]}
           name={props.name}
+          key={props.name}
           autoFocus
-
         />
-        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor={props.name}> 
+        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor={props.name}>
           {label}
-        </label>  
+        </label>
       </div>
     );
   };
+
   return (
     <div className={styles.container}>
       <Head>
@@ -106,115 +115,292 @@ export default function Home() {
           {/* <a href="https://nextjs.org">At</a> */}
         </h1>
 
-        <p className="font-bold text-gray-200 py-60 px-60" style={{padding:"60px 60px 0"}}> We&apos;re your new rental agent. You pay us and we pay your landlord, and you get sweet perks each month + when it&apos;s time to renew your lease and move! </p>
+        <p className="font-bold text-gray-200 py-60 px-60" style={{ padding: "60px 60px 0" }}> We&apos;re your new rental agent. You pay us and we pay your landlord, and you get sweet perks each month + when it&apos;s time to renew your lease and move! </p>
         <p className={styles.description}>
           Get started by filling out this  {' '}
           <code className={styles.code}>form</code>
         </p>
 
         <form
-      className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
-      // className={['storybook-form', `storybook-form--${size}`, mode].join(' ')}
-      // style={{display:"flex" }}
-      onSubmit={()=>{console.log("submitting")}}
-      // {...props}
-    >
-      <div style={{display:"flex",margin:"0 0 40px", }}>
-        <Input
+          className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+          // className={['storybook-form', `storybook-form--${size}`, mode].join(' ')}
+          // style={{display:"flex" }}
+          onSubmit={() => { console.log("submitting") }}
+        // {...props}
+        >
+          <div style={{ display: "flex", margin: "0 0 40px", }}>
+            <div style={{ display: "flex", flexDirection: "column", width: "50%", alignItems: "space-between", padding: "0 2% 0 0" }}>
+              <input
+                className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-slate-500"
+                value={firstName}
+                onChange={e => updateFormData(e)}
+                placeholder="First name"
+                type="text"
+                name="firstName"
+                required
+              />
+              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor={firstName}>
+                {"First Name"}
+              </label>
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", width: "50%", alignItems: "space-between", padding: "0 2% 0 0" }}>
+              <input
+                className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-slate-500"
+                value={lastName}
+                onChange={e => updateFormData(e)}
+                placeholder="Last name"
+                type="text"
+                name="lastName"
+                required
+              />
+              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor={lastName}>
+                {"Last Name"}
+              </label>
+            </div>
+            {/* <Input
           label={"First Name"}
           name="firstName"
           value={firstName}
-        />
-        <Input
+          updateFormData={updateFormData}
+        /> */}
+            {/* <Input
           label={"Last Name"}
           name="lastName"
           value={lastName}
-        />
-      </div>
-      <div style={{display:"flex",margin:"0 0 40px", }}>
-        <Input
-          label={"Phone number"}
-          type="tel"
-          name="phone"
-          value={phone}
-        />
-        <Input
-          label={"Company"}
-          name="company"
-          value={company}
-        />
-      </div>
-      <div>
+          updateFormData={updateFormData}
+        /> */}
+          </div>
+          <div style={{ display: "flex", margin: "0 0 40px", }}>
+            <div style={{ display: "flex", flexDirection: "column", width: "50%", alignItems: "space-between", padding: "0 2% 0 0" }}>
+              <input
+                className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-slate-500"
+                value={phone}
+                onChange={e => updateFormData(e)}
+                placeholder="555-555-5555"
+                type="text"
+                name="phone"
+                required
+              />
+              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor={phone}>
+                {"Phone"}
+              </label>
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", width: "50%", alignItems: "space-between", padding: "0 2% 0 0" }}>
+              <input
+                className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-slate-500"
+                value={company}
+                onChange={e => updateFormData(e)}
+                placeholder="Company"
+                type="text"
+                name="company"
+                required
+              />
+              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor={company}>
+                {"Company"}
+              </label>
+            </div>
+            {/* <Input
+              label={"Phone number"}
+              type="tel"
+              name="phone"
+              value={phone}
+              updateFormData={updateFormData}
+            />
+            <Input
+              label={"Company"}
+              name="company"
+              value={company}
+              updateFormData={updateFormData}
+            /> */}
+          </div>
+          <div>
 
-      </div>      
-      <div style={{margin:"0 0 40px", display:"flex"}}>
-      <Input
-          label={"Home address"}
-          type="text"
-          name="address"
-          value={address}
-
-      />
-        <Input
-          label={"Email"}
-          type="email"
-          name="email"
-          value={email}
-        />
-        </div>
-      <div style={{margin:"0 0 20px",display:"flex"}}>
-        <Input
-          placeholder={"https://twitter.com/_queenscript"}
-          label={"Twitter Link"}
-          type="text"
-          name="twitterLink"
-          value={twitterLink}
-
-        />
-        <Input
-            placeholder={"https://linkedin.com/in/queenshabazz"}
-            label={"LinkedIn"}
-            type="text"
-            name="linkedinLink"
-            value={linkedinLink}
-        />
-        <Input
-            placeholder={"https://www.facebook.com/QueenShabazz/"}
-            label={"Facebook"}
-            type="text"
-            name="facebookLink"
-            value={facebookLink}
-
-        />
-      </div>
-      <div style={{margin:"0 0 20px",display:"flex"}}>
-        <Input
-          placeholder={"111 San Jose"}
-          label={"Landlord Address"}
-          type="text"
-          name="landlordAddress"
-          value={landlordAddress}
-        />
-        <Input
-            placeholder={"landlord@email.coma"}
-            label={"Landlord Email"}
-            type="email"
-            name="landlordEmail"
-            value={landlordEmail}
-        />
-        <Input
-            placeholder={"(555)555-5555"}
-            label={"Landlord Phone"}
-            type="tel"
-            name="landlordPhone"
-            value={landlordPhone}
-        />
-      </div>    
-      <Button
-        type="submit"
-        label={"Submit"}
-      />
-    </form>
+          </div>
+          <div style={{ margin: "0 0 40px", display: "flex" }}>
+            <div style={{ display: "flex", flexDirection: "column", width: "50%", alignItems: "space-between", padding: "0 2% 0 0" }}>
+              <input
+                className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-slate-500"
+                value={address}
+                onChange={e => updateFormData(e)}
+                placeholder="111 San Jose"
+                type="text"
+                name="address"
+                required
+              />
+              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor={address}>
+                {"Address"}
+              </label>
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", width: "50%", alignItems: "space-between", padding: "0 2% 0 0" }}>
+              <input
+                className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-slate-500"
+                value={email}
+                onChange={e => updateFormData(e)}
+                placeholder="email@me.com"
+                type="text"
+                name="email"
+                required
+              />
+              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor={email}>
+                {"Email"}
+              </label>
+            </div>
+            {/* <Input
+              label={"Home address"}
+              type="text"
+              name="address"
+              value={address}
+              updateFormData={updateFormData}
+            />
+            <Input
+              label={"Email"}
+              type="email"
+              name="email"
+              value={email}
+              updateFormData={updateFormData}
+            /> */}
+          </div>
+          <div style={{ margin: "0 0 20px", display: "flex" }}>
+            <div style={{ display: "flex", flexDirection: "column", width: "50%", alignItems: "space-between", padding: "0 2% 0 0" }}>
+              <input
+                className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-slate-500"
+                value={twitterLink}
+                onChange={e => updateFormData(e)}
+                placeholder="https://twitter.com/_queenscript"
+                type="text"
+                name="twitterLink"
+                
+              />
+              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor={twitterLink}>
+                {"Twitter"}
+              </label>
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", width: "50%", alignItems: "space-between", padding: "0 2% 0 0" }}>
+              <input
+                className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-slate-500"
+                value={linkedinLink}
+                onChange={e => updateFormData(e)}
+                placeholder="https://linkedin.com/in/queenshabazz"
+                type="text"
+                name="linkedinLink"
+                
+              />
+              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor={linkedinLink}>
+                {"LinkedIn"}
+              </label>
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", width: "50%", alignItems: "space-between", padding: "0 2% 0 0" }}>
+              <input
+                className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-slate-500"
+                value={facebookLink}
+                onChange={e => updateFormData(e)}
+                placeholder="https://www.facebook.com/QueenShabazz/"
+                type="text"
+                name="facebookLink"
+                
+              />
+              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor={facebookLink}>
+                {"Facebook"}
+              </label>
+            </div>
+            {/* <Input
+              placeholder={"https://twitter.com/_queenscript"}
+              label={"Twitter Link"}
+              type="text"
+              name="twitterLink"
+              value={twitterLink}
+              updateFormData={updateFormData}
+            />
+            <Input
+              placeholder={"https://linkedin.com/in/queenshabazz"}
+              label={"LinkedIn"}
+              type="text"
+              name="linkedinLink"
+              value={linkedinLink}
+              updateFormData={updateFormData}
+            />
+            <Input
+              placeholder={"https://www.facebook.com/QueenShabazz/"}
+              label={"Facebook"}
+              type="text"
+              name="facebookLink"
+              value={facebookLink}
+              updateFormData={updateFormData}
+            /> */}
+          </div>
+          <div style={{ margin: "0 0 20px", display: "flex" }}>
+            {/* <Input
+              placeholder={"111 San Jose"}
+              label={"Landlord Address"}
+              type="text"
+              name="landlordAddress"
+              value={landlordAddress}
+              updateFormData={updateFormData}
+            />
+            <Input
+              placeholder={"landlord@email.coma"}
+              label={"Landlord Email"}
+              type="email"
+              name="landlordEmail"
+              value={landlordEmail}
+              updateFormData={updateFormData}
+            />
+            <Input
+              placeholder={"(555)555-5555"}
+              label={"Landlord Phone"}
+              type="tel"
+              name="landlordPhone"
+              value={landlordPhone}
+              updateFormData={updateFormData}
+            /> */}
+            <div style={{ display: "flex", flexDirection: "column", width: "50%", alignItems: "space-between", padding: "0 2% 0 0" }}>
+              <input
+                className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-slate-500"
+                value={landlordAddress}
+                onChange={e => updateFormData(e)}
+                placeholder="111 San Jose"
+                type="text"
+                name="landlordAddress"
+                required
+              />
+              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor={address}>
+                {"Landlord Address"}
+              </label>
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", width: "50%", alignItems: "space-between", padding: "0 2% 0 0" }}>
+              <input
+                className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-slate-500"
+                value={landlordEmail}
+                onChange={e => updateFormData(e)}
+                placeholder="landlord@email.com"
+                type="text"
+                name="landlordEmail"
+                required
+              />
+              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor={landlordEmail}>
+                {"Landlord Email"}
+              </label>
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", width: "50%", alignItems: "space-between", padding: "0 2% 0 0" }}>
+              <input
+                className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-slate-500"
+                value={landlordPhone}
+                onChange={e => updateFormData(e)}
+                placeholder="555-555-5555"
+                type="text"
+                name="landlordPhone"
+                required
+              />
+              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor={landlordPhone}>
+                {"Landlord Phone"}
+              </label>
+            </div>
+          </div>
+          <Button
+            type="submit"
+            label={"Submit"}
+          />
+        </form>
 
         {/* <div className={styles.grid}>
           <a href="https://nextjs.org/docs" className={styles.card}>
