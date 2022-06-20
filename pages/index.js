@@ -2,9 +2,44 @@ import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import React, { useState } from 'react'
+import {gql, useQuery, useMutation,client,ApolloProvider,ApolloClient,
+  InMemoryCache,} from "@apollo/client"
+import {Mutation} from '../db/resolvers'
+
+// const client = new ApolloClient({
+//   uri: '/api/graphql',
+//   cache: new InMemoryCache()
+// });
+// Define mutation
+const CREATE_USER = gql`
+  # Increments a back-end counter and gets its resulting value
+  mutation NewUser(
+    $UserInput: UserInput
+      ) {
+  newUser(
+  user: $UserInput) 
+  {
+  firstName
+  lastName
+  phone 
+  company
+  address
+  email 
+  twitterLink
+  linkedinLink 
+  facebookLink 
+  landlordAddress
+  landlordEmail
+  landlordPhone 
+  }
+}
+`
 // import { Form } from '../stories/Form/Form'
 export default function Home() {
   // ** FORM CONTROLS */
+  // Pass mutation to useMutation
+  const [mutateFunction, { data, loading, error }] = useMutation(CREATE_USER);
+  const {newUser} = Mutation
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -21,8 +56,6 @@ export default function Home() {
 
   })
 
-
-
   let {
     firstName,
     lastName,
@@ -37,11 +70,7 @@ export default function Home() {
     landlordEmail,
     landlordPhone } = formData
 
-  let changed
 
-  React.useEffect(() => {
-    changed = formData
-  }, [formData])
   const updateFormData = event => {
     // event.preventDefault()
 
@@ -60,10 +89,8 @@ export default function Home() {
       <button
         type={props.type}
         className="shadow bg-yellow-500 hover:bg-gray-500 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
-        // , ['storybook-button', `storybook-button--${size}`, mode].join(' ')
         style={backgroundColor && { backgroundColor }}
         {...props}
-      // onClick={()=>{console.log('CLICK')}}
       >
         {label}
       </button>
@@ -102,6 +129,7 @@ export default function Home() {
   };
 
   return (
+
     <div className={styles.container}>
       <Head>
         <title>Atlas</title>
@@ -112,7 +140,6 @@ export default function Home() {
       <main className={styles.main}>
         <h1 className={styles.title}>
           Welcome to <span className="text-yellow-500">Atlas</span>
-          {/* <a href="https://nextjs.org">At</a> */}
         </h1>
 
         <p className="font-bold text-gray-200 py-60 px-60" style={{ padding: "60px 60px 0" }}> We&apos;re your new rental agent. You pay us and we pay your landlord, and you get sweet perks each month + when it&apos;s time to renew your lease and move! </p>
@@ -125,8 +152,26 @@ export default function Home() {
           className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
           // className={['storybook-form', `storybook-form--${size}`, mode].join(' ')}
           // style={{display:"flex" }}
-          onSubmit={() => { console.log("submitting") }}
-        // {...props}
+          onSubmit={ 
+            async (e) => {
+            e.preventDefault();
+            mutateFunction({variables:{"UserInput":formData}}) 
+            setFormData({
+              firstName: "",
+              lastName: "",
+              phone: "",
+              company: "",
+              address: "",
+              email: "",
+              twitterLink: "",
+              linkedinLink: "",
+              facebookLink: "",
+              landlordAddress: "",
+              landlordEmail: "",
+              landlordPhone: ""
+            })
+
+          }}
         >
           <div style={{ display: "flex", margin: "0 0 40px", }}>
             <div style={{ display: "flex", flexDirection: "column", width: "50%", alignItems: "space-between", padding: "0 2% 0 0" }}>
@@ -157,18 +202,7 @@ export default function Home() {
                 {"Last Name"}
               </label>
             </div>
-            {/* <Input
-          label={"First Name"}
-          name="firstName"
-          value={firstName}
-          updateFormData={updateFormData}
-        /> */}
-            {/* <Input
-          label={"Last Name"}
-          name="lastName"
-          value={lastName}
-          updateFormData={updateFormData}
-        /> */}
+
           </div>
           <div style={{ display: "flex", margin: "0 0 40px", }}>
             <div style={{ display: "flex", flexDirection: "column", width: "50%", alignItems: "space-between", padding: "0 2% 0 0" }}>
@@ -199,19 +233,7 @@ export default function Home() {
                 {"Company"}
               </label>
             </div>
-            {/* <Input
-              label={"Phone number"}
-              type="tel"
-              name="phone"
-              value={phone}
-              updateFormData={updateFormData}
-            />
-            <Input
-              label={"Company"}
-              name="company"
-              value={company}
-              updateFormData={updateFormData}
-            /> */}
+ 
           </div>
           <div>
 
@@ -245,20 +267,6 @@ export default function Home() {
                 {"Email"}
               </label>
             </div>
-            {/* <Input
-              label={"Home address"}
-              type="text"
-              name="address"
-              value={address}
-              updateFormData={updateFormData}
-            />
-            <Input
-              label={"Email"}
-              type="email"
-              name="email"
-              value={email}
-              updateFormData={updateFormData}
-            /> */}
           </div>
           <div style={{ margin: "0 0 20px", display: "flex" }}>
             <div style={{ display: "flex", flexDirection: "column", width: "50%", alignItems: "space-between", padding: "0 2% 0 0" }}>
@@ -303,57 +311,10 @@ export default function Home() {
                 {"Facebook"}
               </label>
             </div>
-            {/* <Input
-              placeholder={"https://twitter.com/_queenscript"}
-              label={"Twitter Link"}
-              type="text"
-              name="twitterLink"
-              value={twitterLink}
-              updateFormData={updateFormData}
-            />
-            <Input
-              placeholder={"https://linkedin.com/in/queenshabazz"}
-              label={"LinkedIn"}
-              type="text"
-              name="linkedinLink"
-              value={linkedinLink}
-              updateFormData={updateFormData}
-            />
-            <Input
-              placeholder={"https://www.facebook.com/QueenShabazz/"}
-              label={"Facebook"}
-              type="text"
-              name="facebookLink"
-              value={facebookLink}
-              updateFormData={updateFormData}
-            /> */}
+
           </div>
           <div style={{ margin: "0 0 20px", display: "flex" }}>
-            {/* <Input
-              placeholder={"111 San Jose"}
-              label={"Landlord Address"}
-              type="text"
-              name="landlordAddress"
-              value={landlordAddress}
-              updateFormData={updateFormData}
-            />
-            <Input
-              placeholder={"landlord@email.coma"}
-              label={"Landlord Email"}
-              type="email"
-              name="landlordEmail"
-              value={landlordEmail}
-              updateFormData={updateFormData}
-            />
-            <Input
-              placeholder={"(555)555-5555"}
-              label={"Landlord Phone"}
-              type="tel"
-              name="landlordPhone"
-              value={landlordPhone}
-              updateFormData={updateFormData}
-            /> */}
-            <div style={{ display: "flex", flexDirection: "column", width: "50%", alignItems: "space-between", padding: "0 2% 0 0" }}>
+         <div style={{ display: "flex", flexDirection: "column", width: "50%", alignItems: "space-between", padding: "0 2% 0 0" }}>
               <input
                 className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-slate-500"
                 value={landlordAddress}
@@ -402,35 +363,6 @@ export default function Home() {
           />
         </form>
 
-        {/* <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h2>Documentation &rarr;</h2>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h2>Learn &rarr;</h2>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/canary/examples"
-            className={styles.card}
-          >
-            <h2>Examples &rarr;</h2>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h2>Deploy &rarr;</h2>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div> */}
       </main>
 
       <footer className={styles.footer}>

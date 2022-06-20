@@ -40,8 +40,11 @@ type Query{
 
 type Mutation{
     #User
-    newUser(input: UserInput):User
+    newUser(user:UserInput):User
 }
 `
 
 module.exports = typeDefs
+
+
+

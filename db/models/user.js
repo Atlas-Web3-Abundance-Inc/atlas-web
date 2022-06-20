@@ -1,70 +1,70 @@
-import mongoose from 'mongoose';
-
-const {Schema} = mongoose;
-
-mongoose.Promise = global.Promise;
+const mongoose = require('mongoose')
+const { Schema } = mongoose
 
 const UserSchema = new Schema({
     firstName: {
         type: String, 
-        required: true,
+        required: false,
         trim: true
     },
     lastName: {
         type: String, 
-        required: true,
+        required: false,
         trim: true
     },
     phone: {
         type: String, 
-        required: true,
+        required: false,
         trim: true
     },
     company: {
         type: String, 
-        required: true,
+        required: false,
         trim: true
     },
     address: {
         type: String, 
-        required: true,
+        required: false,
         trim: true
     },
     email: {
         type: String, 
-        required: true,
+        required: false,
         trim: true
     },
     twitterLink: {
         type: String, 
-        required: true,
+        required: false,
         trim: false
     },
     linkedinLink: {
         type: String, 
-        required: true,
+        required: false,
         trim: false
     },
     facebookLink: {
         type: String, 
-        required: true,
+        required: false,
         trim: false
     },
     landlordAddress: {
         type: String, 
-        required: true,
+        required: false,
         trim: true
     },
     landlordEmail: {
         type: String, 
-        required: true,
+        required: false,
         trim: true
     },
     landlordPhone: {
         type: String, 
-        required: true,
+        required: false,
         trim: true
     }, 
 })
 
-module.exports = mongoose.models.User ||mongoose.model('User',UserSchema)
+let User = mongoose.model('user',UserSchema);
+
+
+export default User;
