@@ -9,11 +9,17 @@ type User{
     phone: String 
     company: String
     address: String
+    addressCity: String
+    addressState: String
+    addressZip: String
     email: String 
     twitterLink: String
     linkedinLink: String 
     facebookLink: String 
     landlordAddress:String
+    landlordCity: String
+    landlordState: String
+    landlordZip: String
     landlordEmail: String
     landlordPhone: String 
 }
@@ -24,11 +30,17 @@ input UserInput{
     phone: String! 
     company: String!
     address: String!
+    addressCity: String!
+    addressState: String!
+    addressZip: String!
     email: String! 
     twitterLink: String!
     linkedinLink: String! 
     facebookLink: String! 
     landlordAddress:String!
+    landlordCity: String!
+    landlordState: String!
+    landlordZip: String!
     landlordEmail: String!
     landlordPhone: String! 
 }

@@ -27,6 +27,21 @@ const UserSchema = new Schema({
         required: false,
         trim: true
     },
+    addressCity: {
+        type: String, 
+        required: false,
+        trim: true
+    },
+    addressState: {
+        type: String, 
+        required: false,
+        trim: true
+    },
+    addressZip: {
+        type: String, 
+        required: false,
+        trim: true
+    },
     email: {
         type: String, 
         required: false,
@@ -52,6 +67,21 @@ const UserSchema = new Schema({
         required: false,
         trim: true
     },
+    landlordCity: {
+        type: String, 
+        required: false,
+        trim: true
+    },
+    landlordState: {
+        type: String, 
+        required: false,
+        trim: true
+    },
+    landlordZip: {
+        type: String, 
+        required: false,
+        trim: true
+    },
     landlordEmail: {
         type: String, 
         required: false,
@@ -64,7 +94,4 @@ const UserSchema = new Schema({
     }, 
 })
 
-let User = mongoose.model('user',UserSchema);
-
-
-export default User;
+module.exports = mongoose?.models?.user ? mongoose.models.user: mongoose.model('user', UserSchema)
