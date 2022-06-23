@@ -38,9 +38,10 @@ const resolvers = {
                 newUser.landlordPhone = args?.user.landlordPhone;
 
                 let res = await newUser?.save(
-                    function(err) {
-                    console.log('error db! ', err);
-                  })
+                    function() {
+                    console.log('saved:', newUser )});
+                
+                return res
               
             } catch (e){
                 console.log('ERR',e,)
