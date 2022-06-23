@@ -120,7 +120,7 @@ export default function Home() {
                 <div className="success-animation">
                   <svg className="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52"><circle className="checkmark__circle" cx="26" cy="26" r="25" fill="none" /><path className="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" /></svg>
                   <div className="bg-gray-50 p-5 sm:px-6 sm:flex sm:flex-row-reverse" style={{ margin: "20% 0" }}>
-                    We've received your entry and will be in touch with you soon!
+                    We&apos;ve received your entry and will be in touch with you soon!
                   </div>
                 </div>
 
