@@ -261,7 +261,20 @@ export default function Home() {
                   {"Last Name"}
                 </label>
               </div>
-
+              <div style={{ display: "flex", flexDirection: "column", width: "50%", alignItems: "space-between", padding: "0 2% 0 0" }}>
+                <input
+                  className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-slate-500"
+                  value={email}
+                  onChange={e => updateFormData(e)}
+                  placeholder="my@email.com"
+                  type="text"
+                  name="email"
+                  required
+                />
+                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor={email}>
+                  {"Email"}
+                </label>
+              </div>
             </div>
             <div style={{ display: "flex", margin: "0 0 40px", }}>
               <div style={{ display: "flex", flexDirection: "column", width: "50%", alignItems: "space-between", padding: "0 2% 0 0" }}>
