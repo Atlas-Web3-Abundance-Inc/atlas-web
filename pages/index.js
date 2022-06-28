@@ -209,7 +209,8 @@ export default function Home() {
             onSubmit={
               async (e) => {
                 e.preventDefault();
-                mutateFunction({ variables: { "UserInput": formData } }).then(
+                mutateFunction({ variables: { "UserInput": formData } })
+                .then(
                   setIsHidden(true)
                 ).catch(e => {
                   setIsHidden(false)
