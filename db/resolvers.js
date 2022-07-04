@@ -39,9 +39,13 @@ const resolvers = {
 
                 let res = await newUser?.save(
                     function() {
-                    console.log('saved:', newUser )});
+                    if(err){
+                        throw err
+                    }
+                    console.log('saved:', newUser )
+                });
                 
-                return res
+                return newUser
               
             } catch (e){
                 console.log('ERR',e,)

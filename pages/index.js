@@ -194,7 +194,7 @@ export default function Home() {
           Welcome to <span className="text-yellow-500">Atlas</span>
         </h1>
 
-        <p className="font-bold text-gray-200 py-60 px-60" style={{ padding: "60px 60px 0" }}> We&apos;re your new rental agent. You pay us and we pay your landlord, and you get sweet perks each month + when it&apos;s time to renew your lease and move! </p>
+        <p className="font-bold text-gray-200 py-60 px-60 text-center" style={{ textAlign:'center', padding: "60px 60px 0" }}> Pay your rent through Atlas and get $5 cash back each month. Atlas is your new personal rental agent. We&apos;ll go to war with your landlord on your behalf to get you the best lease terms. Put us to work! Our first offering for you is monthly cash back. </p>
         <p className={styles.description}>
           Get started by filling out this  {' '}
           <code className={styles.code}>form</code>
