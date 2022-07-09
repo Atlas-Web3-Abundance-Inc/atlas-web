@@ -8,11 +8,6 @@ import {
 } from "@apollo/client"
 import { Mutation } from '../db/resolvers'
 
-// const client = new ApolloClient({
-//   uri: '/api/graphql',
-//   cache: new InMemoryCache()
-// });
-// Define mutation
 const CREATE_USER = gql`
   # Increments a back-end counter and gets its resulting value
   mutation NewUser(
@@ -43,6 +38,11 @@ const CREATE_USER = gql`
 }
 `
 
+/**
+ * 
+ * @todo Refactor GraphQL connection
+ * @todo Add React Native connection 
+ */
 
 // import { Form } from '../stories/Form/Form'
 export default function Home() {

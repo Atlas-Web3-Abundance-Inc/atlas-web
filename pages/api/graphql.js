@@ -14,15 +14,6 @@ const apolloServer = new ApolloServer({
       },
 })
 
-// export const config = { 
-//     api: {
-//         bodyParser: false,
-//     }
-// }
-
-// export default new ApolloServer({schema}).createHandler({
-//     path: '/api/graphql'
-// })
 
 const startServer = apolloServer.start();
 
