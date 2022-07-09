@@ -3,7 +3,7 @@ import {gql, useQuery, useMutation,ApolloProvider,ApolloClient,
   InMemoryCache,} from "@apollo/client"
   
   const client = new ApolloClient({
-    uri: 'https://atlas-web-six.vercel.app/api/graphql',
+    uri: '/api/graphql',
     cache: new InMemoryCache()
   });
 function MyApp({ Component, pageProps }) {
