@@ -39,9 +39,7 @@ const resolvers = {
 
                 let res = await newUser?.save(
                     function() {
-                    if(err){
-                        throw err
-                    }
+                    
                     console.log('saved:', newUser )
                 });
                 
